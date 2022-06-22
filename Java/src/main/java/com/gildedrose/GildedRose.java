@@ -23,43 +23,41 @@ class GildedRose {
 	}
 
 	private void updateItemQuality(Item item) {
+		int alterBy = 0;
 		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 			if (item.name.equals(CONJURED_MANA_CAKE)) {
-				item.quality = item.quality - 2;
+				alterBy -= 2;
 			} else {
-				item.quality = item.quality - 1;
+				alterBy -= 1;
 			}
 		} else {
-			item.quality = item.quality + 1;
+			alterBy += 1;
 
 			if (item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 				if (item.sellIn < 11) {
-					item.quality = item.quality + 1;
+					alterBy += 1;
 				}
 
 				if (item.sellIn < 6) {
-					item.quality = item.quality + 1;
+					alterBy += 1;
 				}
 			}
 		}
 
-		item.sellIn = item.sellIn - 1;
+		item.sellIn -= 1;
 
 		if (item.sellIn < 0) {
-			if (!item.name.equals(AGED_BRIE)) {
-				if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-					if (item.name.equals(CONJURED_MANA_CAKE)) {
-						item.quality = item.quality - 2;
-					} else {
-						item.quality = item.quality - 1;
-					}
-				} else {
-					item.quality = item.quality - item.quality;
-				}
-			} else {
-				item.quality = item.quality + 1;
+			if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+				alterBy *= 2;
+			} else{
+				alterBy = - item.quality;
 			}
 		}
+		alterByValue(item, alterBy);
+	}
+	
+	private void alterByValue(Item item, int alterBy) {
+		item.quality += alterBy;
 	}
 
 	private void adjustQuality(List<Item> itemsWithoutSulfuras) {
