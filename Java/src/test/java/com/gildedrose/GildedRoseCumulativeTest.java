@@ -19,7 +19,7 @@ public class GildedRoseCumulativeTest {
 				// this conjured item does not work properly yet
 				new Item("Conjured Mana Cake", 3, 6) };
 
-		GildedRose app = new GildedRose(items);
+		GildedRoseImpl app = new GildedRose(items);
 
 		int days = 2;
 		if (args.length > 0) {
@@ -30,7 +30,7 @@ public class GildedRoseCumulativeTest {
 	}
 
 	@Test
-	private static void testGildedRoseItems(Item[] items, GildedRose app, int days) {
+	private static void testGildedRoseItems(Item[] items, GildedRoseImpl app, int days) {
 		app.updateQuality();
 		System.out.println("-------- day " + 1 + " --------");
 		System.out.println("name, sellIn, quality");

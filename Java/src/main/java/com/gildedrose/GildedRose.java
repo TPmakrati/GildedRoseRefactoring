@@ -4,20 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class GildedRose {
-	private static final String CONJURED_MANA_CAKE = "Conjured Mana Cake";
-	private static final String SULFURAS_HAND_OF_RAGNAROS = "Sulfuras, Hand of Ragnaros";
-	private static final String BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT = "Backstage passes to a TAFKAL80ETC concert";
-	private static final String AGED_BRIE = "Aged Brie";
-	Item[] items;
+class GildedRose extends GildedRoseImpl{
 
 	public GildedRose(Item[] items) {
-		this.items = items;
+		super(items);
 	}
 
+	@Override
 	public void updateQuality() {
 		List<Item> itemsWithoutSulfuras = Arrays.asList(items).parallelStream()
-				.filter(item -> (!item.name.equals(SULFURAS_HAND_OF_RAGNAROS))).collect(Collectors.toList());
+				.filter(item -> (!item.name.equals(ItemNames.SULFURAS_HAND_OF_RAGNAROS))).collect(Collectors.toList());
 		itemsWithoutSulfuras.parallelStream().forEach(item -> updateItemQuality(item));
 		adjustQuality(itemsWithoutSulfuras);
 	}
@@ -33,15 +29,15 @@ class GildedRose {
 	}
 
 	private int updateAlterBy(Item item, int alterBy) {
-		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-			if (item.name.equals(CONJURED_MANA_CAKE)) {
+		if (!item.name.equals(ItemNames.AGED_BRIE) && !item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+			if (item.name.equals(ItemNames.CONJURED_MANA_CAKE)) {
 				alterBy -= 2;
 			} else {
 				alterBy -= 1;
 			}
 		} else {
 			alterBy += 1;
-			if (item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+			if (item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 				if (item.sellIn < 11) {
 					alterBy += 1;
 				}
@@ -55,7 +51,7 @@ class GildedRose {
 	}
 
 	private int updateAlterByWhenItemExpired(Item item, int alterBy) {
-		if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+		if (!item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 			alterBy *= 2;
 		} else{
 			alterBy = - item.quality;
