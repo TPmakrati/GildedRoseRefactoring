@@ -24,6 +24,15 @@ class GildedRose {
 
 	private void updateItemQuality(Item item) {
 		int alterBy = 0;
+		alterBy = updateAlterBy(item, alterBy);
+		item.sellIn -= 1;
+		if (item.sellIn < 0) {
+			alterBy = updateAlterByWhenItemExpired(item, alterBy);
+		}
+		alterByValue(item, alterBy);
+	}
+
+	private int updateAlterBy(Item item, int alterBy) {
 		if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 			if (item.name.equals(CONJURED_MANA_CAKE)) {
 				alterBy -= 2;
@@ -32,7 +41,6 @@ class GildedRose {
 			}
 		} else {
 			alterBy += 1;
-
 			if (item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
 				if (item.sellIn < 11) {
 					alterBy += 1;
@@ -42,18 +50,17 @@ class GildedRose {
 					alterBy += 1;
 				}
 			}
-		}
+		}		
+		return alterBy;
+	}
 
-		item.sellIn -= 1;
-
-		if (item.sellIn < 0) {
-			if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-				alterBy *= 2;
-			} else{
-				alterBy = - item.quality;
-			}
+	private int updateAlterByWhenItemExpired(Item item, int alterBy) {
+		if (!item.name.equals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+			alterBy *= 2;
+		} else{
+			alterBy = - item.quality;
 		}
-		alterByValue(item, alterBy);
+		return alterBy;
 	}
 	
 	private void alterByValue(Item item, int alterBy) {
