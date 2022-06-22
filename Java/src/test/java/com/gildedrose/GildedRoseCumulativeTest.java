@@ -54,8 +54,8 @@ public class GildedRoseCumulativeTest {
 				&& app.items[6].quality == 50);
 		assertTrue(app.items[7].name.equals("Backstage passes to a TAFKAL80ETC concert") && app.items[7].sellIn == 4
 				&& app.items[7].quality == 50);
-		/*assertTrue(app.items[8].name.equals("Conjured Mana Cake") && app.items[8].sellIn == 2
-				&& app.items[8].quality == 4);*/
+		assertTrue(app.items[8].name.equals("Conjured Mana Cake") && app.items[8].sellIn == 2
+				&& app.items[8].quality == 4);
 		app.updateQuality();
 		System.out.println("-------- day " + 2 + " --------");
 		System.out.println("name, sellIn, quality");
@@ -79,8 +79,8 @@ public class GildedRoseCumulativeTest {
 				&& app.items[6].quality == 50);
 		assertTrue(app.items[7].name.equals("Backstage passes to a TAFKAL80ETC concert") && app.items[7].sellIn == 3
 				&& app.items[7].quality == 50);
-		/*assertTrue(app.items[8].name.equals("Conjured Mana Cake") && app.items[8].sellIn == 1
-				&& app.items[8].quality == 2);*/
+		assertTrue(app.items[8].name.equals("Conjured Mana Cake") && app.items[8].sellIn == 1
+				&& app.items[8].quality == 2);
 	}
 
 }

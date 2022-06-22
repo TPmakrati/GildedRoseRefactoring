@@ -80,7 +80,7 @@ class GildedRoseTest {
         assertEquals(0, app.items[0].quality);
     }
     
-    /*@Test
+    @Test
     void testConjuredDecreaseInQualityByTwoWhenNotExpired() {
         Item[] items = new Item[] { new Item("Conjured Mana Cake", 12, 40) };
         GildedRose app = new GildedRose(items);
@@ -105,7 +105,7 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(4, app.items[0].sellIn);
         assertEquals(0, app.items[0].quality);
-    }*/
+    }
     
     @Test
     void testGenericDecreaseInQualityByOneWhenNotExpired(){
