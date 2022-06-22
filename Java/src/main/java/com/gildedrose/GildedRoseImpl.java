@@ -9,7 +9,6 @@ public class GildedRoseImpl {
 	}
 
 	public void updateQuality() {
-		
 	}
 
 }

@@ -20,55 +20,18 @@ class GildedRose extends GildedRoseImpl{
 
 	private void updateItemQuality(Item item) {
 		int alterBy = 0;
-		alterBy = updateAlterBy(item, alterBy);
+		ItemAlterationInterface itemAlteration = createItemAlterationObject(item);
+		alterBy += itemAlteration.getAlterationValue(item);
 		item.sellIn -= 1;
 		if (item.sellIn < 0) {
-			alterBy = updateAlterByWhenItemExpired(item, alterBy);
+			alterBy = itemAlteration.getAlterationValueWhenExpired(item, alterBy);
 		}
-		alterByValue(item, alterBy);
-	}
-
-	private int updateAlterBy(Item item, int alterBy) {
-		int value;
-		switch (item.name) {
-			case ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT:
-				if(item.sellIn < 6)
-					value = 3;
-				else if(item.sellIn < 11)
-					value = 2;
-				else
-					value = 1;
-				break;
-			case ItemNames.AGED_BRIE:
-				value = 1;
-				break;
-			case ItemNames.CONJURED_MANA_CAKE:
-				value = -2;
-				break;
-			default:
-				value = -1;
-				break;
-		}
-		alterBy = updateAlterByValue(alterBy, value);
-		return alterBy;
-	}
-	
-	private int updateAlterByValue(int alterBy, int value) {
-		alterBy += value;
-		return alterBy;
-	}
-
-	private int updateAlterByWhenItemExpired(Item item, int alterBy) {
-		if (!item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-			alterBy *= 2;
-		} else{
-			alterBy = - item.quality;
-		}
-		return alterBy;
-	}
-	
-	private void alterByValue(Item item, int alterBy) {
 		item.quality += alterBy;
+	}
+
+	private ItemAlterationInterface createItemAlterationObject(Item item) {
+		ItemAlterationFactory itemFactory = new ItemAlterationFactory();
+		return itemFactory.createItemObject(item.name);
 	}
 
 	private void adjustQuality(List<Item> itemsWithoutSulfuras) {
