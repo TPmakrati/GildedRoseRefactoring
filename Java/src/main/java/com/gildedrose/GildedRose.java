@@ -29,24 +29,32 @@ class GildedRose extends GildedRoseImpl{
 	}
 
 	private int updateAlterBy(Item item, int alterBy) {
-		if (!item.name.equals(ItemNames.AGED_BRIE) && !item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-			if (item.name.equals(ItemNames.CONJURED_MANA_CAKE)) {
-				alterBy -= 2;
-			} else {
-				alterBy -= 1;
-			}
-		} else {
-			alterBy += 1;
-			if (item.name.equals(ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-				if (item.sellIn < 11) {
-					alterBy += 1;
-				}
-
-				if (item.sellIn < 6) {
-					alterBy += 1;
-				}
-			}
-		}		
+		int value;
+		switch (item.name) {
+			case ItemNames.BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT:
+				if(item.sellIn < 6)
+					value = 3;
+				else if(item.sellIn < 11)
+					value = 2;
+				else
+					value = 1;
+				break;
+			case ItemNames.AGED_BRIE:
+				value = 1;
+				break;
+			case ItemNames.CONJURED_MANA_CAKE:
+				value = -2;
+				break;
+			default:
+				value = -1;
+				break;
+		}
+		alterBy = updateAlterByValue(alterBy, value);
+		return alterBy;
+	}
+	
+	private int updateAlterByValue(int alterBy, int value) {
+		alterBy += value;
 		return alterBy;
 	}
 
