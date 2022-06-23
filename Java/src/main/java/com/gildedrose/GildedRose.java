@@ -14,11 +14,11 @@ class GildedRose extends GildedRoseImpl{
 	public void updateQuality() {
 		List<Item> itemsWithoutSulfuras = Arrays.asList(items).parallelStream()
 				.filter(item -> (!item.name.equals(ItemNames.SULFURAS_HAND_OF_RAGNAROS))).collect(Collectors.toList());
-		itemsWithoutSulfuras.parallelStream().forEach(item -> updateItemQuality(item));
+		itemsWithoutSulfuras.parallelStream().forEach(GildedRose::updateItemQuality);
 		adjustQuality(itemsWithoutSulfuras);
 	}
 
-	private void updateItemQuality(Item item) {
+	private static void updateItemQuality(Item item) {
 		int alterBy = 0;
 		ItemAlterationInterface itemAlteration = createItemAlterationObject(item);
 		alterBy += itemAlteration.getAlterationValue(item);
@@ -29,7 +29,7 @@ class GildedRose extends GildedRoseImpl{
 		item.quality += alterBy;
 	}
 
-	private ItemAlterationInterface createItemAlterationObject(Item item) {
+	private static ItemAlterationInterface createItemAlterationObject(Item item) {
 		ItemAlterationFactory itemFactory = new ItemAlterationFactory();
 		return itemFactory.createItemObject(item.name);
 	}
